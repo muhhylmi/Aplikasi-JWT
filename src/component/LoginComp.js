@@ -73,7 +73,7 @@ function LoginComp() {
 
   return (
     <Fragment>
-      <Container>
+      <Container className="mt-4">
         <Row>
           <Col>
             <CardImg width="100%" src="https://placeimg.com/640/380/people" />
@@ -111,7 +111,6 @@ function LoginComp() {
                 disabled={data.isSubmitting}
               >
                 {data.isSubmitting ? "...loading" : "Login"}
-                Submit
               </Button>
             </Form>
           </Col>
