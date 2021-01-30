@@ -5,6 +5,8 @@ import LoginComp from "./component/LoginComp";
 import MenuComp from "./component/MenuComp";
 import RegisterComp from "./component/RegisterComp";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Public from "./component/Public";
+import Transaksi from "./component/Transaksi";
 
 //context
 export const AuthContext = createContext();
@@ -47,13 +49,10 @@ function App() {
       <Switch>
         <AuthContext.Provider value={{ state, dispatch }}>
           <MenuComp />
-          {!state.isAuthenticated ? (
-            <Redirect to={{ pathname: "/" }} />
-          ) : (
-            <Redirect to={{ pathname: "/homepage" }} />
-          )}
-          <Route exact path="/" component={LoginComp} />
-          <Route exact path="/homepage" component={HomeComp} />
+          <Route exact path="/" component={Public} />
+          <Route exact path="/dashboard" component={HomeComp} />
+          <Route exact path="/login" component={LoginComp} />
+          <Route exact path="/transaksi" component={Transaksi} />
           <Route exact path="/register" component={RegisterComp} />
         </AuthContext.Provider>
       </Switch>
