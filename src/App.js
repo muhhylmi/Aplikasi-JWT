@@ -1,9 +1,10 @@
 import { createContext, useReducer } from "react";
-import { BrowserRouter, Redirect, Router, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import HomeComp from "./component/HomeComp";
 import LoginComp from "./component/LoginComp";
 import MenuComp from "./component/MenuComp";
 import RegisterComp from "./component/RegisterComp";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 //context
 export const AuthContext = createContext();
@@ -51,9 +52,9 @@ function App() {
           ) : (
             <Redirect to={{ pathname: "/homepage" }} />
           )}
-          <Router pathname="/" component={LoginComp} />
-          <Router pathname="/homepage" component={HomeComp} />
-          <Router pathname="/register" component={RegisterComp} />
+          <Route exact path="/" component={LoginComp} />
+          <Route exact path="/homepage" component={HomeComp} />
+          <Route exact path="/register" component={RegisterComp} />
         </AuthContext.Provider>
       </Switch>
     </BrowserRouter>
