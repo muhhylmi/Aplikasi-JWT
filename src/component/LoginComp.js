@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { Fragment, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Alert,
   Button,
@@ -9,10 +9,11 @@ import {
   Form,
   Row,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../App";
 
 const qs = require("querystring");
-const api_url = "http::/localhost:3001";
+const api_url = "http://localhost:3001";
 
 function LoginComp() {
   const { dispatch } = useContext(AuthContext);
@@ -47,7 +48,7 @@ function LoginComp() {
     };
 
     const config = {
-      header: {
+      headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     };
@@ -72,51 +73,52 @@ function LoginComp() {
   };
 
   return (
-    <Fragment>
-      <Container className="mt-4">
-        <Row>
-          <Col>
-            <CardImg width="100%" src="https://placeimg.com/640/380/people" />
-          </Col>
-          <Col className="align-self-center">
+    <Container className="mt-4">
+      <Row>
+        <Col>
+          <CardImg width="100%" src="https://placeimg.com/640/380/people" />
+        </Col>
+        <Col className="align-self-center">
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                placeholder="Enter email"
+                value={data.email}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={data.password}
+                onChange={handleChange}
+              />
+            </Form.Group>
             {data.errorMessage && (
-              <Alert variant="danger" className="mb-4">
-                gagal masuk
+              <Alert variant="danger" className="my-2">
+                {data.errorMessage}
               </Alert>
             )}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  value={data.email}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={data.password}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Button
-                variant="primary"
-                type="submit"
-                disabled={data.isSubmitting}
-              >
-                {data.isSubmitting ? "...loading" : "Login"}
-              </Button>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    </Fragment>
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={data.isSubmitting}
+            >
+              {data.isSubmitting ? "...loading" : "Login"}
+            </Button>
+          </Form>
+          <p className="mt-3">
+            Belum punya akun? <Link to="/register">Registrasi</Link>
+          </p>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

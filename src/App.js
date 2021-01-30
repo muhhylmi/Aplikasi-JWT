@@ -33,7 +33,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: false,
-        user: action.payload.user,
+        user: null,
       };
     default:
       return state;

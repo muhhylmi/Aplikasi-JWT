@@ -3,7 +3,8 @@ import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { AuthContext } from "../App";
 
 function MenuComp() {
-  const { state, dispacth } = useContext(AuthContext);
+  const { state, dispatch } = useContext(AuthContext);
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
@@ -11,14 +12,13 @@ function MenuComp() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+            <Nav.Link href="/homepage">Home</Nav.Link>
           </Nav>
-          <Nav.Link href="#link" className="ml-auto">
+          <Nav.Link className="ml-auto">
             <Button
               variant="dark"
               onClick={() =>
-                dispacth({
+                dispatch({
                   type: "LOGOUT",
                 })
               }
