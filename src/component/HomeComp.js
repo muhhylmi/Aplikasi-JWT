@@ -1,9 +1,14 @@
 import React, { useContext } from "react";
 import { Jumbotron, Button } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 import { AuthContext } from "../App";
 
 function HomeComp() {
   const { state, dispatch } = useContext(AuthContext);
+
+  if (!state.isAuthenticated) {
+    return <Redirect to="/login" />;
+  }
   return (
     <Jumbotron>
       <h1>Hello, {state.user}</h1>

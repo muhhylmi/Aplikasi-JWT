@@ -15,7 +15,7 @@ import { AuthContext } from "../App";
 const qs = require("querystring");
 const api_url = "http://localhost:3001";
 
-function LoginComp() {
+function LoginComp(props) {
   const { dispatch } = useContext(AuthContext);
 
   const initialState = {
@@ -61,6 +61,7 @@ function LoginComp() {
             type: "LOGIN",
             payload: res.data,
           });
+          props.history.push("/dashboard");
         } else {
           setData({
             ...data,

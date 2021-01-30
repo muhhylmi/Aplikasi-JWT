@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Jumbotron } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+import { AuthContext } from "../App";
 
 function Transaksi() {
+  const { state, dispatch } = useContext(AuthContext);
+  if (!state.isAuthenticated) {
+    return <Redirect to="/login" />;
+  }
   return (
     <Jumbotron>
       <h1>Transaksi</h1>
