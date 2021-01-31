@@ -8,7 +8,7 @@ const api_url = "http://localhost:3001";
 
 function ListMahasiswa() {
   const [mahasiswa, setMahasiswa] = useState([]);
-  const { state } = useContext(AuthContext);
+  const { state, dispatch } = useContext(AuthContext);
 
   const fetchData = () => {
     var config = {
@@ -28,8 +28,18 @@ function ListMahasiswa() {
       });
   };
 
+  const timeout = () => {
+    setTimeout(() => {
+      dispatch({
+        type: "LOGOUT",
+      });
+    }, state.tokenExpires);
+  };
+
   useEffect(() => {
     fetchData();
+    //membuat Timeout jika token kadaluarsa
+    timeout();
     //dibuat array biar tidak loop terus menerus (eslint disable next line)
   }, []);
 
