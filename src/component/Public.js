@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Jumbotron } from "react-bootstrap";
+import { Button, Jumbotron, Container } from "react-bootstrap";
 
 function Public() {
   return (

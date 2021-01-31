@@ -6,7 +6,7 @@ function MenuPublik() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">JWT-App</Navbar.Brand>
+        <Navbar.Brand href="/">JWT-App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto"></Nav>

@@ -15,6 +15,8 @@ import { AuthContext } from "../App";
 const qs = require("querystring");
 const api_url = "http://localhost:3001";
 
+var Recaptcha = require("react-recaptcha");
+
 function LoginComp(props) {
   const { dispatch } = useContext(AuthContext);
 
@@ -23,9 +25,26 @@ function LoginComp(props) {
     password: "",
     isSubmitting: false,
     errorMessage: null,
+    isVerified: null,
   };
 
   const [data, setData] = useState(initialState);
+
+  // specifying your onload callback function
+  var callback = function () {
+    console.log("Done!!!!");
+  };
+
+  // specifying verify callback function
+  var verifyCallback = function (response) {
+    console.log(response);
+    if (response) {
+      setData({
+        ...data,
+        isVerified: true,
+      });
+    }
+  };
 
   const handleChange = (event) => {
     setData({
@@ -36,50 +55,57 @@ function LoginComp(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setData({
-      ...data,
-      isSubmitting: true,
-      errorMessage: null,
-    });
 
-    const requestBody = {
-      email: data.email,
-      password: data.password,
-    };
-
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    };
-
-    axios
-      .post(api_url + "/auth/api/v1/login", qs.stringify(requestBody), config)
-      .then((res) => {
-        if (res.data.success === true) {
-          dispatch({
-            type: "LOGIN",
-            payload: res.data,
-          });
-          props.history.push("/dashboard");
-        } else {
-          setData({
-            ...data,
-            isSubmitting: false,
-            errorMessage: res.data.message,
-          });
-        }
-        throw res;
+    if (data.isVerified) {
+      setData({
+        ...data,
+        isSubmitting: true,
+        errorMessage: null,
       });
+
+      const requestBody = {
+        email: data.email,
+        password: data.password,
+      };
+
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+
+      axios
+        .post(api_url + "/auth/api/v1/login", qs.stringify(requestBody), config)
+        .then((res) => {
+          if (res.data.success === true) {
+            dispatch({
+              type: "LOGIN",
+              payload: res.data,
+            });
+            props.history.push("/dashboard");
+          } else {
+            setData({
+              ...data,
+              isSubmitting: false,
+              errorMessage: res.data.message,
+            });
+          }
+          throw res;
+        });
+    } else {
+      alert("Masukan Verifikasi Recaptcha");
+    }
   };
 
   return (
     <Container className="mt-4">
       <Row>
         <Col>
-          <CardImg width="100%" src="https://placeimg.com/640/380/people" />
+          <CardImg width="100%" src="https://placeimg.com/640/380/tech" />
         </Col>
         <Col className="align-self-center">
+          <h2>Login Form</h2>
+          <hr />
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
@@ -101,6 +127,13 @@ function LoginComp(props) {
                 onChange={handleChange}
               />
             </Form.Group>
+
+            <Recaptcha
+              sitekey="6LeiukMaAAAAAAqHwCqBMNrXoU25ygm-uu3WM_Oz"
+              render="explicit"
+              verifyCallback={verifyCallback}
+              onloadCallback={callback}
+            />
             {data.errorMessage && (
               <Alert variant="danger" className="my-2">
                 {data.errorMessage}
