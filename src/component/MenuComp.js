@@ -37,6 +37,9 @@ function MenuComp() {
               <NavLink to="/transaksi" className="nav-link">
                 Transaksi
               </NavLink>
+              <NavLink to="/mahasiswa" className="nav-link">
+                Mahasiswa
+              </NavLink>
             </Nav>
             <Nav.Link className="ml-auto">
               <Button
