@@ -40,7 +40,7 @@ function ListMahasiswa() {
     fetchData();
     //membuat Timeout jika token kadaluarsa
     timeout();
-    //dibuat array biar tidak loop terus menerus (eslint disable next line)
+    // eslint-disable-next-line
   }, []);
 
   if (!state.isAuthenticated) {

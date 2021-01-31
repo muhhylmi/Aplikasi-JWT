@@ -1,63 +1,22 @@
 import React, { useContext } from "react";
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
 import { AuthContext } from "../App";
+import MenuAdmin from "./menu/MenuAdmin";
+import MenuMember from "./menu/MenuMember";
+import MenuPublik from "./menu/MenuPublik";
+import MenuStaff from "./menu/MenuStaff";
 
 function MenuComp() {
-  const { state, dispatch } = useContext(AuthContext);
+  const { state } = useContext(AuthContext);
 
   if (!state.isAuthenticated) {
-    return (
-      <Navbar bg="dark" variant="dark" expand="lg">
-        <Container>
-          <Navbar.Brand href="#home">JWT-App</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto"></Nav>
-            <Nav.Link className="ml-auto">
-              <NavLink to="/login">
-                <Button>Login</Button>
-              </NavLink>
-            </Nav.Link>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    );
-  } else {
-    return (
-      <Navbar bg="dark" variant="dark" expand="lg">
-        <Container>
-          <Navbar.Brand href="#home">JWT-App</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <NavLink to="/dashboard" className="nav-link">
-                Home
-              </NavLink>
-              <NavLink to="/transaksi" className="nav-link">
-                Transaksi
-              </NavLink>
-              <NavLink to="/mahasiswa" className="nav-link">
-                Mahasiswa
-              </NavLink>
-            </Nav>
-            <Nav.Link className="ml-auto">
-              <Button
-                variant="dark"
-                onClick={() =>
-                  dispatch({
-                    type: "LOGOUT",
-                  })
-                }
-              >
-                Logout
-              </Button>
-            </Nav.Link>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    );
+    return <MenuPublik />;
   }
+  if (state.role === 2) {
+    return <MenuAdmin />;
+  } else if (state.role === 3) {
+    return <MenuStaff />;
+  }
+  return <MenuMember />;
 }
 
 export default MenuComp;

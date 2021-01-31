@@ -3,14 +3,16 @@ import { Button, Jumbotron } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../App";
 
-function Transaksi() {
+function RoleStaff() {
   const { state } = useContext(AuthContext);
   if (!state.isAuthenticated) {
     return <Redirect to="/login" />;
   }
   return (
     <Jumbotron>
-      <h1>Transaksi</h1>
+      <h1>
+        Hello, {state.role} yaitu {state.user}
+      </h1>
       <p>
         This is a simple hero unit, a simple jumbotron-style component for
         calling extra attention to featured content or information.
@@ -22,4 +24,4 @@ function Transaksi() {
   );
 }
 
-export default Transaksi;
+export default RoleStaff;
