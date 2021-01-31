@@ -49,7 +49,9 @@ function ListMahasiswa() {
 
   return (
     <Container>
-      <Table striped bordered hover>
+      <h2 className="my-2">Daftar Mahasiswa</h2>
+      <hr />
+      <Table striped bordered hover className="mt-3">
         <thead>
           <tr>
             <th>No</th>
